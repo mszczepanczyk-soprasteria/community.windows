@@ -41,8 +41,8 @@ $cim_params = @{
     Property = @('FileSystem', 'SupportsFileBasedCompression')
 }
 $drive_info = Get-CimInstance @cim_params
-if ($drive_info.SupportsFileBasedCompression -eq $false) {
-    $module.FailJson("Path, $path, is not on a filesystemi '$($drive_info.FileSystem)' that supports file based compression.")
+if ($drive_info.SupportsFileBasedCompression -eq $false -and $state -eq 'present') {
+    $module.FailJson("Path, $path, is not on a filesystem '$($drive_info.FileSystem)' that supports file based compression.")
 }
 
 function Get-ReturnCodeMessage {
